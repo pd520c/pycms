@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 from sqlalchemy import *
+from sqlalchemy import distinct, func
 from sqlalchemy.sql import *
 #from sqlalchemy.orm import *
 from sqlalchemy.databases import mysql
@@ -49,15 +50,12 @@ mysql_engine='InnoDB')
 #创建所有表
 def install(): 
     metadata.create_all(mysql_engine)
-#s='adminname'
-#select = admin_table.select()
-#conn = mysql_engine.connect()
-#result = conn.execute(select)
-#for x in result:
-    #if x[1]==s:
-       #print"dongt"
-    #else:
-       # print"dddd"
+
+#stm = select([admin_table.c.adminname]).where(admin_table.c.adminname == '777777777')
+#i = conn.execute(stm).fetchall()
+#print len(i)
+    
+
 
 
 
