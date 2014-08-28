@@ -35,16 +35,18 @@ class Sign:
         return  render_template('Sign.html', encoding='utf-8',title = 'sign')
     def POST(self):
         i = web.input()
-        insert = admin_table.insert()
+        #insert = admin_table.insert()
         conn = mysql_engine.connect()
         stm = select([admin_table.c.adminname]).where(admin_table.c.adminname == i.name)
         i = conn.execute(stm).fetchall()
-        if len(i)>0 :
-            return "Sorry Don't resign"
-        else:
-            conn.execute(insert, adminname = i.name, password = i.password)
+        conn.close()
+        if len(i)==0 :
+            mysql_engine.connect().execute(admin_table.insert(), adminname = '77777', password = '777777')
+            mysql_engine.connect().close()
             return "resign successed"
-
+        else:
+            return "Don't resign"
+        
 if __name__ == "__main__":  
     app = web.application(urls, globals())  
     app.run()     

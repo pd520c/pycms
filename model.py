@@ -51,10 +51,7 @@ mysql_engine='InnoDB')
 def install(): 
     metadata.create_all(mysql_engine)
 
-#stm = select([admin_table.c.adminname]).where(admin_table.c.adminname == '777777777')
-#i = conn.execute(stm).fetchall()
-#print len(i)
-    
+
 
 
 
