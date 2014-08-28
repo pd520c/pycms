@@ -30,18 +30,16 @@ class Index:
 
 class Sign:  
     def GET(self):  
-        #return render.first('world','name')
-        #f = Sign() 
         return  render_template('Sign.html', encoding='utf-8',title = 'sign')
     def POST(self):
-        i = web.input()
-        #insert = admin_table.insert()
+        name = web.input().name
+        passwd =web.input().password
         conn = mysql_engine.connect()
-        stm = select([admin_table.c.adminname]).where(admin_table.c.adminname == i.name)
+        stm = select([admin_table.c.adminname]).where(admin_table.c.adminname == name)
         i = conn.execute(stm).fetchall()
         conn.close()
         if len(i)==0 :
-            mysql_engine.connect().execute(admin_table.insert(), adminname = '77777', password = '777777')
+            mysql_engine.connect().execute(admin_table.insert(), adminname = name, password = passwd)
             mysql_engine.connect().close()
             return "resign successed"
         else:
