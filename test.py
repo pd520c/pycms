@@ -1,2 +1,2 @@
-from model import *
-insertsql(admin,{'adminname' : 'admin', 'password' : '123456'})
+import os
+print os.path.dirname(__file__)

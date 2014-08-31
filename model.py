@@ -26,10 +26,10 @@ Column('password', String(20)),
 Column('info', String(20)),
 mysql_engine='InnoDB')
 #session table
-session_table = Table('websession', metadata,
-Column('sessionid', String(120), primary_key = True),
+session_table = Table('sessions', metadata,
+Column('session_id', String(120), primary_key = True),
 Column('atime', DateTime, default=datetime.datetime.now()),
-Column('text',Text),
+Column('data',Text),
 mysql_engine='InnoDB')
 #栏目表，栏目id，栏目名称，排序，栏目url
 channel_table = Table('channel', metadata,
@@ -58,8 +58,5 @@ mysql_engine='InnoDB')
 def install(): 
     metadata.create_all(mysql_engine)
 
-install()
-
-
-
+#install()
 
