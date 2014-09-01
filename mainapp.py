@@ -14,8 +14,8 @@ urls = (
     
 )
 app = web.application(urls, globals())
-db = web.database(dbn='mysql',db='cms',user='root',pw='')
-session = web.session.Session(app, web.session.DBStore(db,'sessions'), initializer={'login': 0,})
+#db = web.database(dbn='mysql',db='cms',user='root',pw='')
+#session = web.session.Session(app, web.session.DBStore(db,'sessions'), initializer={'login': 0,})
 # set jinja2 
 def render_template(template_name, **context):
     extensions = context.pop('extensions', [])
@@ -51,19 +51,19 @@ class Sign:
             return "resign successed"
         else:
             return "Don't resign"
-def logged():
+'''def logged():
         if session.login==1:
             return True
         else:
-            return False
+            return False'''
 
 class Admin:
     def GET(self):
-        if logged():
+        '''if logged():
             return render_template('Admin.html', encoding='utf-8',title = 'sign')
         else:
-            return render_template('Login.html', encoding='utf-8',title = 'sign')
-    
+            return render_template('Login.html', encoding='utf-8',title = 'sign')'''
+        return render_template('login33.html', encoding='utf-8',title = 'adminlogin')
     def POST(self):
         name = web.input().name
         passwd =web.input().password
@@ -72,10 +72,10 @@ class Admin:
         i = conn.execute(stm).fetchall()
         conn.close()
         if len(i)>0:
-            session.login = 1
-            print"you are admin"
+            #session.login = 1
+            return render_template('Admin.html', encoding='utf-8')
         else:
-            session.login = 0
+            #session.login = 0
             return "error"
                 
         
