@@ -3,12 +3,15 @@ import datetime
 from sqlalchemy import *
 from sqlalchemy import distinct, func
 from sqlalchemy.sql import *
-#from sqlalchemy.orm import *
+from sqlalchemy.orm import *
 from sqlalchemy.databases import mysql
 #连接数据库
 mysql_engine = create_engine('mysql://root:@localhost:3306/cms?charset=utf8',
                              encoding = "utf-8",echo =True)
 metadata = MetaData()
+Session=sessionmaker()
+Session.configure(bind=mysql_engine)
+session=Session()
 
 #管理员表,管理员id，用户名，密码，权限
 admin_table = Table('admin', metadata,
@@ -59,4 +62,9 @@ def install():
     metadata.create_all(mysql_engine)
 
 #install()
+query = session.query(admin_table)
+for i in query:
+    print i
+
+
 
