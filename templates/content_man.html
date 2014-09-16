@@ -1,0 +1,7 @@
+{% extends "Adminbase.html" %}
+	
+{% block col2 %}
+{%for item in content%}
+{{item.title}}<a href="/delocntext/{{item.contextid}}">del</a><br>
+{%endfor%}
+{% endblock %}

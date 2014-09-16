@@ -10,7 +10,10 @@ from model import *
 urls = (  
     '/', 'Index',
     '/Sign', 'Sign',
-    '/Admin', 'Admin'
+    '/Admin', 'Admin',
+    '/addcontext', 'Addcontext',
+    '/delocntext/(.*)', 'Delcontext',
+    '/view','View',
     
 )
 app = web.application(urls, globals())
@@ -63,7 +66,7 @@ class Admin:
             return render_template('Admin.html', encoding='utf-8',title = 'sign')
         else:
             return render_template('Login.html', encoding='utf-8',title = 'sign')'''
-        return render_template('login33.html', encoding='utf-8',title = 'adminlogin')
+        return render_template('Login.html', encoding='utf-8',title = 'adminlogin')
     def POST(self):
         name = web.input().name
         passwd =web.input().password
@@ -73,12 +76,36 @@ class Admin:
         conn.close()
         if len(i)>0:
             #session.login = 1
-            return render_template('Admin.html', encoding='utf-8')
+            return render_template('content_add.html', encoding='utf-8')
         else:
             #session.login = 0
             return "error"
-                
-        
+
+class Addcontext:
+    def GET(self):
+        return render_template('content_add.html',encoding='utf-8',title='add')
+    def POST(self):
+        title = web.input().title
+        context =web.input().context
+        mysql_engine.connect().execute(content_table.insert(), title = title, body = context, datetime = datetime.datetime.now())
+        mysql_engine.connect().close()
+        return render_template('content_add.html',encoding='utf-8',title='add')
+
+class Delcontext:
+    def GET(self,id):
+        conn = mysql_engine.connect()
+        stm = content_table.delete().where(content_table.c.contextid == id)
+        conn.execute(stm)
+        conn.close()
+        return render_template('content_man.html',encoding='utf-8')
+class View:
+    def GET(self):
+        conn = mysql_engine.connect()
+        stm = select([content_table])
+        content = conn.execute(stm).fetchall()
+        conn.close()
+        return render_template('content_man.html',encoding='utf-8',content=content)
+    
 if __name__ == "__main__":
     app.run()     
 
