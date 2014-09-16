@@ -44,6 +44,7 @@ mysql_engine='InnoDB')
 #内容表，内容id，标题，内容，作者，发布时间
 content_table = Table('content', metadata,
 Column('contextid', Integer, primary_key=True),
+Column('channelid', Integer),                      
 Column('title', String(20)),
 Column('body', String(1000)),
 Column('author', String(20)),
@@ -61,10 +62,7 @@ mysql_engine='InnoDB')
 def install(): 
     metadata.create_all(mysql_engine)
 
-#install()
-query = session.query(admin_table)
-for i in query:
-    print i
+install()
 
 
 
